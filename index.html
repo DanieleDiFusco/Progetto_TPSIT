@@ -31,11 +31,11 @@
 
 <body>
     <h2>Tabella Vuota</h2>
-    <table>
+    <table id="userTable">
         <thead>
             <tr>
-                <th>Colonna 1</th>
-                <th>Colonna 2</th>
+                <th>Nome</th>
+                <th>Email</th>
             </tr>
         </thead>
         <tbody>
@@ -45,6 +45,29 @@
             </tr>
         </tbody>
     </table>
+
+    <script>
+        const url = "URL_DEL_TUO_JSON";
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nel caricamento JSON');
+                }
+                return response.json();
+            })
+            .then(utenti => {
+                const tbody = document.querySelector('#userTable tbody');
+                utenti.forEach(utente => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${utente.nome}</td><td>${utente.email}</td>`;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+            });
+    </script>
 </body>
 
 </html>
